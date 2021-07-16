@@ -1,0 +1,3 @@
+ALTER TABLE bills_billspaid
+	MODIFY  paidID INT AUTO_INCREMENT,
+	MODIFY  paidDate DATE NULL;

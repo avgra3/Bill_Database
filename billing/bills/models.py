@@ -31,16 +31,21 @@ class Bills(models.Model):
     taxes = models.DecimalField(max_digits=65, decimal_places=2)
     credit = models.DecimalField(max_digits=65, decimal_places=2)
 
+    def dates(self):
+        date = self.dueDate.strftime('%b %y')
+        return date
+
     def __str__(self):
-        return f'{self.carrierID}'
+        date = self.dueDate.strftime('%b %y')
+        return f'{self.carrierID} - {date}'
 
 
 # Creates the Bills Paid table
 class BillsPaid(models.Model):
     def id_default():
         id = self.paidID.max()
-        return id    
-    
+        return id   
+
     paidID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)],
                                 default=id_default)
     paidDate = models.DateField(verbose_name='Date Paid')
