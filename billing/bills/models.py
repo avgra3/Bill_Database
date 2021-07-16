@@ -11,6 +11,9 @@ class Carriers(models.Model):
     def __str__(self):
         return f'{self.carrierName} - {self.carrierAcctNum}'
 
+    class Meta:
+        ordering = ['carrierName', 'carrierAcctNum']
+
 # Creates the Products table
 class Products(models.Model):
     prodID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)])
@@ -18,6 +21,9 @@ class Products(models.Model):
 
     def __str__(self):
         return self.product
+
+    class Meta:
+        ordering = ['product']
 
 # Creates the bills table
 class Bills(models.Model):
@@ -39,6 +45,9 @@ class Bills(models.Model):
         date = self.dueDate.strftime('%b %y')
         return f'{self.carrierID} - {date}'
 
+    class Meta:
+        ordering = ['billDate']
+
 
 # Creates the Bills Paid table
 class BillsPaid(models.Model):
@@ -56,6 +65,9 @@ class BillsPaid(models.Model):
     
     def __str__(self):
         return f'{self.paidID} - {self.billID}'
+
+    class Meta:
+        ordering = ['paidDate', 'billID']
 
     
 
