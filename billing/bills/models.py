@@ -37,7 +37,12 @@ class Bills(models.Model):
 
 # Creates the Bills Paid table
 class BillsPaid(models.Model):
-    paidID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)])
+    def id_default():
+        id = self.paidID.max()
+        return id    
+    
+    paidID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)],
+                                default=id_default)
     paidDate = models.DateField(verbose_name='Date Paid')
     billID = models.ForeignKey(Bills, on_delete=models.CASCADE, verbose_name='related bill')
     notes = models.CharField(max_length=100, default='N/A')
@@ -46,6 +51,8 @@ class BillsPaid(models.Model):
     
     def __str__(self):
         return f'{self.paidID} - {self.billID}'
+
+    
 
     
 
