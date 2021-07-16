@@ -30,7 +30,7 @@ class BillsPaid(models.Model):
     paidID = models.IntegerField(primary_key=True)
     paidDate = models.DateField()
     billID = models.ForeignKey(Bills, on_delete=models.CASCADE, verbose_name='related bill')
-    notes = models.CharField(max_length=100)
+    notes = models.CharField(max_length=100, default='N/A')
     paidBool = models.BooleanField()
     totalPaid = models.DecimalField(max_digits=65, decimal_places=2)
 
