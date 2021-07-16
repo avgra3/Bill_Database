@@ -9,7 +9,7 @@ class Carriers(models.Model):
     carrierAcctNum = models.CharField(max_length=80)
 
     def __str__(self):
-        return self.carrierName
+        return f'{self.carrierName} - {self.carrierAcctNum}'
 
 # Creates the Products table
 class Products(models.Model):
@@ -32,7 +32,7 @@ class Bills(models.Model):
     credit = models.DecimalField(max_digits=65, decimal_places=2)
 
     def __str__(self):
-        return self.billID
+        return f'{self.carrierID}'
 
 
 # Creates the Bills Paid table
@@ -45,7 +45,7 @@ class BillsPaid(models.Model):
     totalPaid = models.DecimalField(max_digits=65, decimal_places=2, verbose_name='Total Paid')
     
     def __str__(self):
-        return self.paidID
+        return f'{self.paidID} - {self.billID}'
 
     
 
