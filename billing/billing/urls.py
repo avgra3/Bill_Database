@@ -18,5 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('bokehApp.urls')),
+    path('bokeh/', include('bokehApp.urls')),
+    path('', include('bills.urls')),
 ]
