@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.core import serializers
 from numpy import pi
 import pandas as pd
 
@@ -26,7 +28,7 @@ def paidbills(request):
     carrier_list = Carriers.objects.values('carrierName', 'carrierAcctNum')
     bills_paid_list = BillsPaid.objects.values('billID', 'totalPaid')
 
-    df = pd.DataFrame(carrier_list).reset_index()
+    df = pd.DataFrame(bills_paid_list).set_index('billID')
     dictionary = {
         "df": df.to_html()
     }    
