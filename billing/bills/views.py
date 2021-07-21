@@ -2,6 +2,7 @@ from django.shortcuts import render
 from numpy import pi
 import pandas as pd
 
+"""
 # Specific to bokeh
 from bokeh.plotting import figure
 from bokeh.embed import components
@@ -12,12 +13,27 @@ from bokeh.models import HoverTool, LassoSelectTool, WheelZoomTool, PointDrawToo
 from bokeh.palettes import Category20c, Spectral6
 from bokeh.transform import cumsum
 from bokeh.resources import CDN
+"""
 
 # Models created
 from .models import BillsPaid, Carriers
 
 # Create your views here.
+def homepage(request):
+    return render(request, 'pages/base.html', {})
+
 def paidbills(request):
-    var1 = BillsPaid.objects.latest('search_q').search_query
-    context = {'property': var1}
-    return render(request, 'YOURVIEW', context)
+    carrier_list = Carriers.objects.values('carrierName', 'carrierAcctNum')
+    bills_paid_list = BillsPaid.objects.values('billID', 'totalPaid')
+
+    df = pd.DataFrame(carrier_list).reset_index()
+    dictionary = {
+        "df": df.to_html()
+    }    
+
+
+    #context = {'bills': bills_paid_list}
+
+    return render(request, 'pages/paidbills.html', context=dictionary)
+
+   # context
