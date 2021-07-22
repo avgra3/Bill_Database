@@ -2,43 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="http://cdn.pydata.org/bokeh/release/bokeh-2.3.3.min.css" rel=”stylesheet” type=”text/css”>
-    <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-2.3.3.min.css" rel=”stylesheet” type=”text/css”>
-    
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.3.min.js"></script>
-    {{script| safe}}
-    <title>Paid Bills</title>
+    <title>Dashboard with Flexmonster</title>
+    <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.flexmonster.com/demo.css">
+    <link rel="stylesheet" type="text/css" href='bills/fleximonster.css' media="screen" />
+
 </head>
 <body>
-    <h1>Paid Bills</h1>
-    {{div| safe}}
+<div id="pivot-table-container" data-url="{% url 'pivot_data' %}"></div>
+<div id="pivot-chart-container"></div>
+{% load static %}
 
-    
-    <h2>Show Data</h1>
-    
-    <!-- <table>
-        <tr>
-            <th>ID</th>
-            <th>carrierID</th>
-            <th>Carrier Acct. Num</th>
-        </tr>
-    <tr>
-        {% for st in carrier %}
-        <td>{{st.carrierId}}</td>
-        <td>{{st.carrierName}}</td>
-        <td>{{st.carrierAcctNum}}</td>
-        
-    </tr>
-        {% endfor %} -->
-
-
-        {{df|safe}}
-
+<script src="{% static 'bills/fleximonster.js' %}"></script>
 </body>
-
 </html>
