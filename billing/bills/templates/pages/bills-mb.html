@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Breakdown</title>
+</head>
+<body>
+    This is the monthly breakdown!
+
+    <br>
+
+    <div class="table" >
+        <table class="table">
+            <tr>
+                <th class="thead">Paid Date</th>
+                <th>Total Paid</th>                      
+            </tr>
+            {% for m in mb %}
+                <tr>
+                    <td><a href="#">{{m.myPaid}}</a></td>
+                    <td>${{m.totalPaid}}</td>
+                <tr>
+            {% endfor %}
+
+</body>
+</html>

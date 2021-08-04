@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core import serializers
+from django.views.generic import ListView
 from numpy import pi
 import pandas as pd
 
@@ -18,7 +19,7 @@ from bokeh.resources import CDN
 """
 
 # Models created
-from .models import BillPaid, Carrier
+from .models import BillPaid, Carrier, MonthlyBreakdown
 
 # Create your views here.
 def homepage(request):
@@ -45,3 +46,11 @@ def pivot_data(request):
 
 def dashboard_with_pivot(request):
     return render(request, 'pages/paidbills.html', {})
+
+
+# Create a view that summarizes the bills table
+class MonthlyBreakdownListView(ListView):
+    model = MonthlyBreakdown
+    template_name = 'pages/bills-mb.html'
+    context_object_name = 'mb'
+    ordering = ['-myPaid']
