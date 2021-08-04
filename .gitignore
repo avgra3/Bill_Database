@@ -3,3 +3,4 @@ venv/
 .vscode/
 ./SQL_scripts/insert_from_file.py
 ./MariaDB.session.sql
+./SQL_scripts/restricted_scripts
