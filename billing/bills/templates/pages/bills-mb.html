@@ -17,12 +17,24 @@
                 <th class="thead">Paid Date</th>
                 <th>Total Paid</th>                      
             </tr>
-            {% for m in mb %}
+            {% for months in mb %}
                 <tr>
-                    <td><a href="#">{{m.myPaid}}</a></td>
-                    <td>${{m.totalPaid}}</td>
+                    <td>{{months.month}}</td>
+                    <td>${{months.s}}</td>
                 <tr>
             {% endfor %}
+        </table>
+    </div>
+    
+    <br>
+
+    <div>
+        After the break!
+    </div>
+    <!-- <p>{{m.mb_content|safe}}</p>
+    {% for m in mb %}
+        <p>{{m.myPaid}} - ${{m.totalPaid}} </p>
+    {% endfor %} -->
 
 </body>
 </html>

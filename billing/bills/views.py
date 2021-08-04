@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core import serializers
 from django.views.generic import ListView
+from django.db.models import Sum, Count
+from django.db.models.functions import TruncMonth
 from numpy import pi
 import pandas as pd
 
@@ -49,8 +51,7 @@ def dashboard_with_pivot(request):
 
 
 # Create a view that summarizes the bills table
-class MonthlyBreakdownListView(ListView):
-    model = MonthlyBreakdown
-    template_name = 'pages/bills-mb.html'
-    context_object_name = 'mb'
-    ordering = ['-myPaid']
+def MonthlyBreakdownListView(request):
+    context = MonthlyBreakdown.objects.annotate(month=TruncMonth('myPaid')).values('month').annotate(s = Sum('totalPaid')).values('month', 's').order_by('month')
+    return render(request = request, template_name='pages/bills-mb.html', context={"mb": context})
+

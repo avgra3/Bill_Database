@@ -7,5 +7,5 @@ urlpatterns = [
     #path('paidbills/', views.paidbills, name='paidbills')
     path('paidbills/', views.dashboard_with_pivot, name='dashboard_with_pivot'),
     path('paidbills/data/', views.pivot_data, name='pivot_data'),
-    path('mb/', MonthlyBreakdownListView.as_view(), name='bills-mb'),
+    path('mb/', views.MonthlyBreakdownListView, name='bills-mb'),
 ]
