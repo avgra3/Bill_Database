@@ -3,8 +3,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 
 # Creates the carriers table 
-class Carriers(models.Model):
-    carrierId = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)])
+class Carrier(models.Model):
+    carrierId = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)], verbose_name='Carrier ID')
     carrierName = models.CharField(max_length=40)
     carrierAcctNum = models.CharField(max_length=80)
 
@@ -15,7 +15,7 @@ class Carriers(models.Model):
         ordering = ['carrierName', 'carrierAcctNum']
 
 # Creates the Products table
-class Products(models.Model):
+class Product(models.Model):
     prodID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)])
     product = models.CharField(max_length=80)
 
@@ -26,12 +26,12 @@ class Products(models.Model):
         ordering = ['product']
 
 # Creates the bills table
-class Bills(models.Model):
+class Bill(models.Model):
     billID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)])
-    carrierID = models.ForeignKey(Carriers, on_delete=models.CASCADE, verbose_name='related carrier')
+    carrierID = models.ForeignKey(Carrier, on_delete=models.CASCADE, verbose_name='Related Carrier')
     billDate = models.DateField(verbose_name='Billed Date')
     dueDate = models.DateField(verbose_name='Due Date')
-    prodID = models.ForeignKey(Products, on_delete=models.CASCADE, verbose_name='related product')
+    prodID = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='related product')
     charge = models.DecimalField(max_digits=65, decimal_places=2)
     anc_fees = models.DecimalField(max_digits=65, decimal_places=2, verbose_name='Ancilliary Fees')
     taxes = models.DecimalField(max_digits=65, decimal_places=2)
@@ -50,16 +50,16 @@ class Bills(models.Model):
 
 
 # Creates the Bills Paid table
-class BillsPaid(models.Model):
+class BillPaid(models.Model):
     def id_default():
         id = self.paidID.max()
         return id   
 
     paidID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)],
-                                default=id_default)
+                                default=id_default, verbose_name='Paid ID')
     paidDate = models.DateField(verbose_name='Date Paid')
-    billID = models.ForeignKey(Bills, on_delete=models.CASCADE, verbose_name='related bill')
-    notes = models.CharField(max_length=100, default='N/A')
+    billID = models.ForeignKey(Bill, on_delete=models.CASCADE, verbose_name='related bill')
+    notes = models.CharField(max_length=100, default='N/A', verbose_name='Notes')
     paidBool = models.BooleanField(verbose_name='Paid (True or False)')
     totalPaid = models.DecimalField(max_digits=65, decimal_places=2, verbose_name='Total Paid')
     
@@ -70,6 +70,20 @@ class BillsPaid(models.Model):
         ordering = ['paidDate', 'billID']
 
     
+# Create a monthly summary table
+class MonthlyBreakdown(models.Model):
+    def id_default():
+        id = self.mbdID.max()
+        return id   
 
+    mbdID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)],
+                                default=id_default, verbose_name='Monthly Billed ID')
+    myPaid = models.DateField(verbose_name='Month/Year Paid')
+    totalPaid = models.DecimalField(max_digits=65, decimal_places=2, verbose_name='Total Paid')
     
+    def __str__(self):
+        return f'{self.myPaid}'
+
+    class Meta:
+        ordering = ['mbdID', 'myPaid']
 

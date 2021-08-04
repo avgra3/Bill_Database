@@ -18,12 +18,13 @@ from bokeh.resources import CDN
 """
 
 # Models created
-from .models import BillsPaid, Carriers
+from .models import BillPaid, Carrier
 
 # Create your views here.
 def homepage(request):
     return render(request, 'pages/base.html', {})
 
+""" 
 def paidbills(request):
     carrier_list = Carriers.objects.values('carrierName', 'carrierAcctNum')
     bills_paid_list = BillsPaid.objects.values('billID', 'totalPaid')
@@ -34,8 +35,13 @@ def paidbills(request):
     }    
 
 
-    #context = {'bills': bills_paid_list}
-
     return render(request, 'pages/paidbills.html', context=dictionary)
+ """
+def pivot_data(request):
+    dataset = BillPaid.objects.all()
+    data = serializers.serialize('json', dataset)
+    return JsonResponse(data, safe=False)
+   
 
-   # context
+def dashboard_with_pivot(request):
+    return render(request, 'pages/paidbills.html', {})

@@ -2,3 +2,4 @@
 venv/
 .vscode/
 ./SQL_scripts/insert_from_file.py
+./MariaDB.session.sql

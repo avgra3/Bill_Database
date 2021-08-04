@@ -1,3 +1,4 @@
-ALTER TABLE bills_billspaid
+ALTER TABLE bills_billpaid
 	MODIFY  paidID INT AUTO_INCREMENT,
-	MODIFY  paidDate DATE NULL;
+	MODIFY  paidDate DATE NULL,
+	MODIFY 	notes VARCHAR(100) DEFAULT 'N/A';
