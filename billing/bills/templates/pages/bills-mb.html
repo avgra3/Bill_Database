@@ -7,7 +7,7 @@
     <title>Monthly Breakdown</title>
 </head>
 <body>
-    This is the monthly breakdown!
+    <h1>This is the monthly summary</h1>
 
     <br>
 
@@ -36,5 +36,10 @@
         <p>{{m.myPaid}} - ${{m.totalPaid}} </p>
     {% endfor %} -->
 
+    <div class="table" >
+        {% for avg in mb %}
+            ${{avg.a}}
+        {% endfor %}
+    </div>
 </body>
 </html>

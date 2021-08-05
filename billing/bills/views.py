@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core import serializers
 from django.views.generic import ListView
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Avg, Q, Count, Case, When
 from django.db.models.functions import TruncMonth
 from numpy import pi
 import pandas as pd
@@ -21,7 +21,7 @@ from bokeh.resources import CDN
 """
 
 # Models created
-from .models import BillPaid, Carrier, MonthlyBreakdown
+from .models import BillPaid, Carrier, MonthlyBreakdown, Bill
 
 # Create your views here.
 def homepage(request):
@@ -52,6 +52,26 @@ def dashboard_with_pivot(request):
 
 # Create a view that summarizes the bills table
 def MonthlyBreakdownListView(request):
+    # Will return a grouped breakdown for each month
     context = MonthlyBreakdown.objects.annotate(month=TruncMonth('myPaid')).values('month').annotate(s = Sum('totalPaid')).values('month', 's').order_by('month')
+
+    
     return render(request = request, template_name='pages/bills-mb.html', context={"mb": context})
+
+def AvergaeBillView(request): 
+    # Returns a dictionary with all carriers
+    carrier_dict = Carrier.objects.all()
+
+    # Returns a dictionary with all billID and carrierID
+    bill_dict = Bill.objects.values('billID', 'carrierID')
+
+    # Match up the two dictionaries
+    #combo_dict = {k: carrier_dict.get(v, v) for k, v in bill_dict.values('billID','carrier')}
+
+
+    # We want to get the average cost for each carrier/utility
+    context = BillPaid.objects.annotate(month=TruncMonth('paidDate')).values('month').annotate(a = Avg('totalPaid')).values('month', 'a').order_by('month')
+
+
+    return render(request = request, template_name='pages/bills-avg.html', context={"avg": context})
 
