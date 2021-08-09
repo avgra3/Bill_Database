@@ -75,3 +75,11 @@ def AvergaeBillView(request):
 
     return render(request = request, template_name='pages/bills-avg.html', context={"avg": context})
 
+
+# A view to show any unpaid bils which are in the database
+def UnpaidBills(request):
+    # Get the unpaid objects
+    unpaid = BillPaid.objects.all().filter(paidBool=0)
+
+    return render(request = request, template_name='pages/base.html', context={"unpaid": unpaid})
+
