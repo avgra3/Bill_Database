@@ -23,11 +23,13 @@ from bokeh.resources import CDN
 # Models created
 from .models import BillPaid, Carrier, MonthlyBreakdown, Bill
 
-# Create your views here.
+""" # Create your views here.
 def homepage(request):
-    return render(request, 'pages/base.html', {})
-
-""" 
+    return render(request, 'pages/base.html', {}) """
+    
+    
+    
+"""
 def paidbills(request):
     carrier_list = Carriers.objects.values('carrierName', 'carrierAcctNum')
     bills_paid_list = BillsPaid.objects.values('billID', 'totalPaid')
@@ -79,7 +81,13 @@ def AvergaeBillView(request):
 # A view to show any unpaid bils which are in the database
 def UnpaidBills(request):
     # Get the unpaid objects
-    unpaid = BillPaid.objects.all().filter(paidBool=0)
+    #context = BillPaid.objects.all().filter(paidBool=0)
 
-    return render(request = request, template_name='pages/base.html', context={"unpaid": unpaid})
+    #return render(request = request, template_name='pages/base.html', context={"unpaid": context})
+
+    context = BillPaid.objects.all().filter(paidBool=0).values('billID', 'totalPaid', 'notes')
+
+
+    return render(request = request, template_name='pages/base.html', context={"unpaid": context})
+
 
