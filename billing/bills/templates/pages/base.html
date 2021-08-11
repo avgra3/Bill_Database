@@ -8,7 +8,7 @@
 </head>
    
 <body>
-    <h1>Base page</h1>
+    <h1>Home Page</h1>
     <br>
 
     <!-- Link to monthly average page -->
@@ -22,20 +22,21 @@
 
     <br>
         
+    <!-- The below shows all pending bills and if there is no pending bills, it will show a message -->
     <div>
         {% if  unpaid.count > 0 %}
         <h1>Pending Bills</h2>
         <table>
             <tr>
-                <th>Bill ID</th>
-                <th>Bill Notes</th>
+                <th>Bill ID#</th>
                 <th>Total Paid</th>
+                <th>Notes</th>
             </tr> 
             <tr>
             {% for car in unpaid %}
                 <td>{{car.billID}}</td>
-                <td>{{car.notes}}</td>
                 <td>${{car.totalPaid}}</td>
+                <td>{{car.notes}}</td>
             {% endfor %}
             </tr>
         </table>

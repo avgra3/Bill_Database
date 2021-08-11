@@ -57,7 +57,7 @@ class BillPaid(models.Model):
 
     paidID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)],
                                  verbose_name='Paid ID', editable=False)
-    paidDate = models.DateField(verbose_name='Date Paid')
+    paidDate = models.DateField(verbose_name='Date Paid', null=True, blank=True)
     billID = models.ForeignKey(Bill, on_delete=models.CASCADE, verbose_name='related bill')
     notes = models.CharField(max_length=100, default='N/A', verbose_name='Notes')
     paidBool = models.BooleanField(verbose_name='Paid (True or False)')

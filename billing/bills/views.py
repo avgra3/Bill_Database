@@ -23,25 +23,11 @@ from bokeh.resources import CDN
 # Models created
 from .models import BillPaid, Carrier, MonthlyBreakdown, Bill
 
-""" # Create your views here.
+# Homepage view.
 def homepage(request):
-    return render(request, 'pages/base.html', {}) """
+    return render(request, 'pages/base.html', {})
     
-    
-    
-"""
-def paidbills(request):
-    carrier_list = Carriers.objects.values('carrierName', 'carrierAcctNum')
-    bills_paid_list = BillsPaid.objects.values('billID', 'totalPaid')
-
-    df = pd.DataFrame(bills_paid_list).set_index('billID')
-    dictionary = {
-        "df": df.to_html()
-    }    
-
-
-    return render(request, 'pages/paidbills.html', context=dictionary)
- """
+# Pivoted data    
 def pivot_data(request):
     dataset = BillPaid.objects.all()
     data = serializers.serialize('json', dataset)
@@ -60,16 +46,13 @@ def MonthlyBreakdownListView(request):
     
     return render(request = request, template_name='pages/bills-mb.html', context={"mb": context})
 
+# Average bill view
 def AvergaeBillView(request): 
     # Returns a dictionary with all carriers
     carrier_dict = Carrier.objects.all()
 
     # Returns a dictionary with all billID and carrierID
     bill_dict = Bill.objects.values('billID', 'carrierID')
-
-    # Match up the two dictionaries
-    #combo_dict = {k: carrier_dict.get(v, v) for k, v in bill_dict.values('billID','carrier')}
-
 
     # We want to get the average cost for each carrier/utility
     context = BillPaid.objects.annotate(month=TruncMonth('paidDate')).values('month').annotate(a = Avg('totalPaid')).values('month', 'a').order_by('month')
@@ -81,12 +64,7 @@ def AvergaeBillView(request):
 # A view to show any unpaid bils which are in the database
 def UnpaidBills(request):
     # Get the unpaid objects
-    #context = BillPaid.objects.all().filter(paidBool=0)
-
-    #return render(request = request, template_name='pages/base.html', context={"unpaid": context})
-
     context = BillPaid.objects.all().filter(paidBool=0).values('billID', 'totalPaid', 'notes')
-
 
     return render(request = request, template_name='pages/base.html', context={"unpaid": context})
 
