@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bills.apps.BillsConfig',
-    'bokehApp.apps.BokehappConfig',
 ]
 
 MIDDLEWARE = [
