@@ -1,51 +1,64 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Basic HTML set-up -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Loading CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bills/main.css' %}">
+
+    <!-- Getting the Title to auto-fix -->
+    {% if title %}
+    <title>{{ title }} </title>
+    {% else %}
     <title>Monthly Billing</title>
+    {% endif %}
+
 </head>
-   
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <body>
-    <h1>Home Page</h1>
-    <br>
-
-    <!-- Link to monthly average page -->
-   <div>
-        <a class="btn" href="{% url 'bills-avg' %}">To Monthly Average page.</a>
-    </div>
-    <!-- Link to monthly breakdown page -->
-    <div>
-        <a class="btn" href="{% url 'bills-mb' %}">To Monthly Breakdown page.</a>
-    </div>
-
-    <br>
-        
-    <!-- The below shows all pending bills and if there is no pending bills, it will show a message -->
-    <div>
-        {% if  unpaid.count > 0 %}
-        <h1>Pending Bills</h2>
-        <table>
-            <tr>
-                <th>Bill ID#</th>
-                <th>Total Paid</th>
-                <th>Notes</th>
-            </tr> 
-            <tr>
-            {% for car in unpaid %}
-                <td>{{car.billID}}</td>
-                <td>${{car.totalPaid}}</td>
-                <td>{{car.notes}}</td>
-            {% endfor %}
-            </tr>
-        </table>
-        {% else %}
-        <h1>No pending bills 😀</h2>
-
-        {% endif %}
-    </div>
-
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+            <a class="navbar-brand mr-4" href="{% url 'pages/home.html' %}">Home Page</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{% url 'bills-avg' %}">Monthly Averages</a>
+                <a class="nav-item nav-link" href="{% url 'bills-mb' %}">Monthly Breakdown</a>
+              </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8">
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}!">
+                {{ message }}
+              </div>
+              {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+    </main>
 </body>
 </html>
-

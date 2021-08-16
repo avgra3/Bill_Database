@@ -12,7 +12,7 @@ from .models import BillPaid, Carrier, MonthlyBreakdown, Bill
 
 # Homepage view.
 def homepage(request):
-    return render(request, 'pages/base.html', {})
+    return render(request, 'pages/home.html', {})
     
 # Pivoted data    
 def pivot_data(request):
@@ -53,6 +53,6 @@ def UnpaidBills(request):
     # Get the unpaid objects
     context = BillPaid.objects.all().filter(paidBool=0).values('billID', 'totalPaid', 'notes')
 
-    return render(request = request, template_name='pages/base.html', context={"unpaid": context})
+    return render(request = request, template_name='pages/home.html', context={"unpaid": context})
 
 
