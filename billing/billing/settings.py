@@ -133,3 +133,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Enables the use of frames within HTML for plotly
+# X_FRAME_OPTIONS = 'SAMEORIGIN'
