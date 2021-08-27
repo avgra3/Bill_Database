@@ -1,10 +1,14 @@
 {% extends "pages/base.html" %}
 {% block content %}
+{% load static %}
     <h1>Monthly Breakdown</h1>
 
     <br>
+    <!-- Smooth scroll to bottom of page -->
+    <a class="section1" href="#">Scroll to bottom</a>
+    <br>
 
-    <div class="table" >
+    <div class="table-responsive">
         <table class="table">
             <tr>
                 <th class="thead">Paid Date</th>
@@ -22,13 +26,17 @@
     <br>
 
     <br>
-    <!-- Link to home page -->
+
     <div>
+        <!-- Link to home page -->
         <a class="btn" href="{% url 'pages/home.html' %}">To Home page.</a>
-    </div>
-    <!-- Link to monthly average page -->
-    <div>
+        <!-- Link to monthly average page -->
         <a class="btn" href="{% url 'bills-avg' %}">To Monthly Average page.</a>
+        <!--This js script is if we are at the bottom of the page and want to easily scrool to the top-->
+        <a class="section2" href="#">Scroll to top</a>
     </div>
+
+<!-- Smooth scroll js -->
+<script src="{% static 'bills/smooth-scroll.js' %}"></script>
 
 {% endblock content %}

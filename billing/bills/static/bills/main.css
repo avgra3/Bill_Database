@@ -89,7 +89,7 @@ a.article-title:hover {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   word-wrap: break-word;
-white-space: nowrap;
+  white-space: nowrap;
 }
 
 .table {
