@@ -33,7 +33,6 @@ def dashboard_with_pivot(request):
 def MonthlyBreakdownListView(request):
     # Will return a grouped breakdown for each month
     context = MonthlyBreakdown.objects.annotate(month=TruncMonth('myPaid')).values('month').annotate(s = Sum('totalPaid')).values('month', 's').order_by('month')
-
     
     return render(request = request, template_name='pages/bills-mb.html', context={"mb": context})
 

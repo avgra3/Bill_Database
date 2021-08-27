@@ -4,7 +4,7 @@
     <title>Monthly Breakdown</title>
 </head>
 <body>
-    <h1>Running Average: ${{runningAvg.Ravg}}</h1>
+    <h1>Running Average: ${{runningAvg.Ravg|floatformat:2}}</h1>
     
     <br>
 
@@ -18,7 +18,7 @@
             {% for car in monthlyAvg %}
                 <tr>
                     <td>{{car.month}}</td>
-                    <td>${{car.a}}</td>
+                    <td>${{car.a|floatformat:2}}</td>
                 </tr>
             {% endfor %}
         </table>
