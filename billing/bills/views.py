@@ -12,7 +12,11 @@ from .models import BillPaid, Carrier, MonthlyBreakdown, Bill
 
 # Homepage view.
 def homepage(request):
-    return render(request, 'pages/home.html', {})
+    # Shows any unpaid bills:
+    unpaid = BillPaid.objects.all().filter(paidBool=0).values('billID', 'totalPaid', 'notes')
+    
+    context = {"unpaid": unpaid}
+    return render(request, 'pages/home.html', context=context)
     
 # Pivoted data    
 def pivot_data(request):
@@ -34,25 +38,17 @@ def MonthlyBreakdownListView(request):
     return render(request = request, template_name='pages/bills-mb.html', context={"mb": context})
 
 # Average bill view
-def AvergaeBillView(request): 
-    # Returns a dictionary with all carriers
-    carrier_dict = Carrier.objects.all()
-
-    # Returns a dictionary with all billID and carrierID
-    bill_dict = Bill.objects.values('billID', 'carrierID')
+def AverageBillPaidView(request):
+    # Get the running average billed amount for all bills
+    runningAvg = BillPaid.objects.aggregate(Ravg=Avg('totalPaid'))
 
     # We want to get the average cost for each carrier/utility
-    context = BillPaid.objects.annotate(month=TruncMonth('paidDate')).values('month').annotate(a = Avg('totalPaid')).values('month', 'a').order_by('month')
+    monthlyAvg = BillPaid.objects.annotate(month=TruncMonth('paidDate')).values('month').annotate(a = Avg('totalPaid')).values('month', 'a').order_by('month')
 
+    # Combines the two items we want to show in view
+    context = {"runningAvg": runningAvg,  "monthlyAvg": monthlyAvg}
 
-    return render(request = request, template_name='pages/bills-avg.html', context={"avg": context})
+    return render(request = request, template_name='pages/bills-avg.html', context=context)
 
-
-# A view to show any unpaid bils which are in the database
-def UnpaidBills(request):
-    # Get the unpaid objects
-    context = BillPaid.objects.all().filter(paidBool=0).values('billID', 'totalPaid', 'notes')
-
-    return render(request = request, template_name='pages/home.html', context={"unpaid": context})
 
 
