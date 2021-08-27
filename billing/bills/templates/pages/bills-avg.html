@@ -1,11 +1,14 @@
 {% extends "pages/base.html" %}
 {% block content %}
+{% load static %}
 <head>
     <title>Monthly Breakdown</title>
 </head>
 <body>
     <h1>Running Average: ${{runningAvg.Ravg|floatformat:2}}</h1>
     
+    <!-- Smooth scroll to bottom of page -->
+    <a class="section1" href="#">Scroll to bottom</a>
     <br>
 
     <h1>Averages per month</h1>
@@ -25,14 +28,17 @@
     </div>
 
     <br>
-    <!-- Link to home page -->
+    
     <div>
+        <!-- Link to home page -->
         <a class="btn" href="{% url 'pages/home.html' %}">To Home page.</a>
-    </div>
-    <!-- Link to monthly breakdown page -->
-    <div>
+        <!-- Link to monthly breakdown page -->
         <a class="btn" href="{% url 'bills-mb' %}">To Monthly Breakdown page.</a>
+        <!--This js script is if we are at the bottom of the page and want to easily scrool to the top-->
+        <a class="section2" href="#">Scroll to top</a>
     </div>
+    
 
+<script src="{% static 'bills/smooth-scroll.js' %}"></script>
 
 {% endblock content %}
