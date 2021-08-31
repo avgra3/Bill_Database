@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Creates the carriers table 
 class Carrier(models.Model):
-    carrierId = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)], verbose_name='Carrier ID', editable=False)
+    carrierId = models.AutoField(primary_key=True, editable=False)
     carrierName = models.CharField(max_length=40)
     carrierAcctNum = models.CharField(max_length=80)
 
