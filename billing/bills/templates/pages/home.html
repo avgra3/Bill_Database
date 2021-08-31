@@ -1,10 +1,10 @@
 {% extends "pages/base.html" %}
 {% block content %}
     <!-- The below shows all pending bills and if there is no pending bills, it will show a message -->
-    <div>
+    <div class="table-responsive">
         {% if  unpaid.count > 0 %}
         <h1>Pending Bills</h2>
-        <table>
+        <table class="table">
             <tr>
                 <th>Bill ID#</th>
                 <th>Total Paid</th>
