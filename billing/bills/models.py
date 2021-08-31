@@ -16,7 +16,7 @@ class Carrier(models.Model):
 
 # Creates the Products table
 class Product(models.Model):
-    prodID = models.IntegerField(primary_key=True, validators=[MinValueValidator(1), MaxValueValidator(10000)], editable=False)
+    prodID = models.AutoField(primary_key=True, editable=False)
     product = models.CharField(max_length=80)
 
     def __str__(self):
