@@ -1,15 +1,19 @@
 {% extends "pages/base.html" %}
 {% block content %}
 {% load static %}
-    <h1>Monthly Breakdown</h1>
-
-    <br>
+<head>
+    <title>Graphical View</title>
+</head>
+<body>
+    <h1>Graphical View</h1>
+    
     <!-- Smooth scroll to bottom of page -->
     <a class="section1" href="#">Scroll to bottom</a>
-    <br>
     
     <br>
+    
     <!-- Beginning of Plots -->
+    <div>
     <div class="mychart">
         <div class="mychart">
             <div class="mychart">
@@ -97,37 +101,104 @@
             </div>
         </div>
     </div>
-    
+
     <br>
 
-    <div class="table-responsive">
-        <table class="table">
-            <tr>
-                <th class="thead">Paid Date</th>
-                <th>Total Paid</th>                      
-            </tr>
-            {% for months in mb %}
-                <tr>
-                    <td>{{months.month|date:"M-Y"}}</td>
-                    <td>${{months.s}}</td>
-                <tr>
-            {% endfor %}
-        </table>
+    <!-- Start of 2nd plot, need to make sure canvas name = chart name & is different from previous chart -->
+    <div class="myChart">
+        <div class="mychart">
+            <div class="mychart">
+                <canvas id="myChartline" class="canvas"></canvas>
+                <script>
+                    var ctx = document.getElementById('myChartline').getContext('2d');
+                    var myChartline = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [{% for m in mb %} '{{ m.month|date:"M - Y"}}',{% endfor %}],
+                        datasets: [{
+                            label: 'Total Paid',
+                            data: [{% for m in mb %} {{ m.s }}, {% endfor %}],
+                            axis: 'y',
+                            fill: false,
+                            backgroundColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                            ],
+                            borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                        }});
+                </script>
+            </div>
+        </div>
     </div>
+</div>
+
+
+
     
-    <br>
+    <!-- End of Plot(s) -->
+
+
 
     <br>
-
+    
     <div>
         <!-- Link to home page -->
         <a class="btn" href="{% url 'pages/home.html' %}">To Home page.</a>
-        <!-- Link to monthly average page -->
-        <a class="btn" href="{% url 'bills-avg' %}">To Monthly Average page.</a>
+        <!-- Link to monthly breakdown page -->
+        <a class="btn" href="{% url 'bills-mb' %}">To Monthly Breakdown page.</a>
         <!--This js script is if we are at the bottom of the page and want to easily scrool to the top-->
         <a class="section2" href="#">Scroll to top</a>
     </div>
-
+    
 <!-- Smooth scroll js -->
 <script src="{% static 'bills/smooth-scroll.js' %}"></script>
 

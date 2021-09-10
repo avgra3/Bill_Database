@@ -7,4 +7,5 @@ urlpatterns = [
     path('paidbills/data/', views.pivot_data, name='pivot_data'),
     path('mb/', views.MonthlyBreakdownListView, name='bills-mb'),
     path('avg/', views.AverageBillPaidView, name='bills-avg'),
+    path('graph/', views.GraphicalView, name='bills-graph'),
 ]

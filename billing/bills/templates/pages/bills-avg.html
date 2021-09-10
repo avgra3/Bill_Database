@@ -20,7 +20,7 @@
             </tr>
             {% for car in monthlyAvg %}
                 <tr>
-                    <td>{{car.month}}</td>
+                    <td>{{car.month|date:"M-Y"}}</td>
                     <td>${{car.a|floatformat:2}}</td>
                 </tr>
             {% endfor %}
