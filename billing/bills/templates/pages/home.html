@@ -24,6 +24,26 @@
         {% endif %}
     </div>
 
+    <br>
+
+    <br>
+
+    <div class="table-responsive">
+        <h2 style="text-align:center">Previous 5 Bills</h2>
+        <table class="table">
+            <tr>
+                <th>Bill ID</th>
+                <th class="thead">Total Paid</th>
+            </tr>
+            {% for p in paid %}
+            <tr>
+                <td>{{p.billID}}</td>
+                <td>${{p.totalPaid}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
 {% endblock content %}
 
 

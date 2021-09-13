@@ -18,7 +18,10 @@ def homepage(request):
     # Shows any unpaid bills:
     unpaid = BillPaid.objects.all().filter(paidBool=0).values('billID', 'totalPaid', 'notes')
     
-    context = {"unpaid": unpaid}
+    # Show previous 5 bills
+    paid = BillPaid.objects.all().select_related('billID').order_by('-paidDate')[:5]
+
+    context = {"unpaid": unpaid, "paid":paid}
     return render(request, 'pages/home.html', context=context)
     
 # Pivoted data    
