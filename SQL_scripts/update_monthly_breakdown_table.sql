@@ -10,8 +10,9 @@ CREATE TRIGGER update_billbreakdown_tbl
 		INSERT INTO bills_monthlybreakdown
 			(myPaid, totalPaid)
 			-- VALUES -- (NEW.paidDate, NEW.totalPaid)
-			SELECT SUM(totalPaid), DATE_FORMAT(paidDate, '%m - %Y')
-			FROM bills_billspaid
+			SELECT DATE_FORMAT(paidDate, '%m - %Y'), SUM(totalPaid)
+			FROM bills_billpaid
+            WHERE paidDate IS NOT NULL
 			GROUP BY DATE_FORMAT(paidDate, '%m - %Y')
 			ORDER BY paidDate;
 	END//
